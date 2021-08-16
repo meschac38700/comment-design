@@ -1,6 +1,6 @@
 import Comment from "../custom_elements/Comment.js";
 
-export const loadingComment = (state) => {
+export const loadingComments = (state) => {
 	state.forEach((comment_data) => {
 		let parent_container = document.querySelector(".container .content");
 		let children = comment_data.children;
@@ -31,6 +31,30 @@ export const loadingComment = (state) => {
 		}
 		parent_container.appendChild(parent_c);
 		hide_or_add_show_children_btn(parent_c);
+	});
+};
+
+/**
+ * add click event handler
+ * @param {HTMLElement} el
+ */
+export const addVoteHandler = (el) => {
+	console.log(el);
+	el.addEventListener("click", (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		el.classList.toggle("voted");
+		let nbrVote = 0;
+		try {
+			nbrVote = Number.parseInt(
+				el.querySelector(".comment_vote_btn")?.textContent.trim()
+			);
+		} catch (error) {}
+		el.querySelector(".comment_vote_btn").textContent = el.classList.contains(
+			"voted"
+		)
+			? nbrVote + 1
+			: nbrVote - 1;
 	});
 };
 
