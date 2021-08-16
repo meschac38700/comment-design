@@ -2,18 +2,19 @@
 {
     --primary-background-color: #e6e6ee;
     --secondary-background-color: #f3f3f3;
-    --third-background-color: rgb(255, 255, 255);
-    --content-primary-color: rgba(6, 14, 29, 0.75);
-    --content-secondary-color: rgba(54, 56, 58, 0.65);
-    --content-third-color: rgb(156, 154, 154);
+    --third-background-color: #ffffff;
+    --content-primary-color: #060e1dbf;
+    --content-secondary-color: #36383aa6;
+    --content-third-color: #9c9a9a;
     --background-color: #ccc;
     --padding-comment-content: 25px;
     --margin-between-comment: 1em;
-    --red-color: rgb(255, 95, 95);
-    --green-color: rgb(60, 196, 48);
+    --red-color: #ff5f5f;
+    --green-color: #3cc430;
     --alert-background-color:  #00baf3;;
     --alert-danger-background-color: #d14130;
     --alert-success-background-color: #99c93d;
+    --voted: #d48b02;
 }
 *, *::after, *::before{
     margin: 0;
@@ -101,6 +102,9 @@ h1, h2, h3, h4, h5, h6
 .icon
 {
     width: 15px;
+}
+.icon.comment_vote_icon {
+    width: 18px;
 }
 .icon.comment_response_icon svg
 {
@@ -347,6 +351,11 @@ h1, h2, h3, h4, h5, h6
 .comment .comment_content_footer .comment_actions:hover
 {
     color: var(--content-primary-color);
+}
+.comment_actions.comment_vote_action.voted:hover,
+.comment_actions.comment_vote_action.voted{
+    color: var(--voted);
+    transition: none;
 }
 .comment_element svg.hide,
 .comment_element.show svg.show
