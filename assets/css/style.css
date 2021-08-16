@@ -25,7 +25,7 @@ html, body
 {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--content-primary-color);
     line-height: 1.4;
     background-color: var(--primary-background-color);
@@ -33,7 +33,7 @@ html, body
 .comment_label,
 h1, h2, h3, h4, h5, h6
 {
-    font-weight: 600;
+    font-weight: 500;
     color: var(--content-primary-color);
     font-size: 16px;
 }
@@ -45,7 +45,6 @@ h1, h2, h3, h4, h5, h6
     font-family: "Source Sans Pro", Arial, sans-serif;
     padding: 11px 30px;
     border-radius: 4px;
-    font-weight: 400;
     position: fixed;
     bottom: 20px;
     right: 20px;
