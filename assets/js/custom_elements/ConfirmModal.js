@@ -1,6 +1,6 @@
 import AlertMessage from "./AlertMessage.js";
 import { ACTION_COMMENT } from "../utils/const.js";
-import { hide_or_add_show_children_btn } from "../utils/functools.js";
+import { hide_or_add_show_answers } from "../utils/functools.js";
 
 export default class ConfirmModal extends HTMLElement {
 	constructor(message = null, delete_text = null, cancel_text = null) {
@@ -40,7 +40,7 @@ export default class ConfirmModal extends HTMLElement {
 				parent.classList.contains("comments_children_container") &&
 				parent.childElementCount === 0
 			) {
-				hide_or_add_show_children_btn(parent.parentElement);
+				hide_or_add_show_answers(parent.parentElement);
 			}
 		});
 		let cancel_btn = document.createElement("BUTTON");

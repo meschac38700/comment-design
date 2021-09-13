@@ -1,7 +1,7 @@
 import { initState } from "./utils/state.js";
 import ConfirmModal from "./custom_elements/ConfirmModal.js";
 import {
-	hide_or_add_show_children_btn,
+	hide_or_add_show_answers,
 	addCommentHandler,
 	loadingComments,
 } from "./utils/functools.js";
@@ -19,6 +19,3 @@ initState()
 	.catch((err) => {
 		console.log(err);
 	});
-
-// manage hide/show children buttons
-hide_or_add_show_children_btn();
