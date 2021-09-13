@@ -70,23 +70,51 @@ export let LOCAL_DATA = {
 	success: false,
 };
 
-export const state = () => {
+/**
+ *	make request to load fake data
+ * @returns {Promise}
+ */
+function requestLoadFakeData() {
+	return fetch("http://127.0.0.1:8000/data").then((response) =>
+		response.json()
+	);
+}
+/**
+ *	make request to get fake data
+ * @returns {Promise}
+ */
+function requestGetFakeData() {
 	return fetch(
 		"http://127.0.0.1:8000/api/v1/comments?parent=true&sort=added:desc"
-	)
-		.then((response) => {
-			console.log(response);
-			if (!response.ok) {
-				LOCAL_DATA.comments = { ...default_state };
-				return default_state;
-			}
-			return response.json().then((data) => {
+	).then((response) => response.json());
+}
+
+/**
+ * Initialize state data
+ * @returns {Promise}
+ */
+export const initState = () => {
+	return requestGetFakeData()
+		.then((data) => {
+			if (!data.success) {
+				return requestLoadFakeData().then((res) => {
+					if (res.success) {
+						return requestGetFakeData().then((data) => {
+							LOCAL_DATA = data;
+							return data;
+						});
+					} else {
+						LOCAL_DATA = default_state;
+						return default_state;
+					}
+				});
+			} else {
 				LOCAL_DATA = data;
 				return data;
-			});
+			}
 		})
 		.catch((err) => {
-			LOCAL_DATA.comments = { ...default_state };
+			LOCAL_DATA = default_state;
 			return default_state;
 		});
 };
