@@ -1,3 +1,5 @@
+import { loadingComments } from "./functools.js";
+
 const default_state = {
 	success: true,
 	previous: null,
@@ -74,8 +76,8 @@ export let LOCAL_DATA = {
  *	make request to load fake data
  * @returns {Promise}
  */
-function requestLoadFakeData() {
-	return fetch("http://127.0.0.1:8000/data").then((response) =>
+function requestLoadFakeData(url) {
+	return fetch(url ?? "http://127.0.0.1:8000/data").then((response) =>
 		response.json()
 	);
 }
@@ -83,9 +85,10 @@ function requestLoadFakeData() {
  *	make request to get fake data
  * @returns {Promise}
  */
-function requestGetFakeData() {
+function requestGetFakeData(url) {
+	console.log("--->", url);
 	return fetch(
-		"http://127.0.0.1:8000/api/v1/comments?parent=true&sort=added:desc"
+		url ?? "http://127.0.0.1:8000/api/v1/comments?parent=true&sort=added:desc"
 	).then((response) => response.json());
 }
 
@@ -93,13 +96,13 @@ function requestGetFakeData() {
  * Initialize state data
  * @returns {Promise}
  */
-export const initState = () => {
-	return requestGetFakeData()
+export const initState = (url = null) => {
+	return requestGetFakeData(url)
 		.then((data) => {
 			if (!data.success) {
-				return requestLoadFakeData().then((res) => {
+				return requestLoadFakeData(url).then((res) => {
 					if (res.success) {
-						return requestGetFakeData().then((data) => {
+						return requestGetFakeData(url).then((data) => {
 							LOCAL_DATA = data;
 							return data;
 						});
@@ -117,4 +120,32 @@ export const initState = () => {
 			LOCAL_DATA = default_state;
 			return default_state;
 		});
+};
+
+/**
+ * loading more comment handler
+ * @param {ClickEvent} e
+ */
+export const loadMoreComment = () => {
+	let once = true;
+	console.log("OK");
+	window.onscroll = function (ev) {
+		console.log("OK");
+
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+			// you're at the bottom of the page
+			console.log("OK ok", once, LOCAL_DATA.next);
+
+			if (LOCAL_DATA.next !== null && once) {
+				initState(`http://127.0.0.1:8000${LOCAL_DATA.next}`)
+					.then((data) => {
+						loadingComments(data);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+				once = false;
+			}
+		} else once = true;
+	};
 };
