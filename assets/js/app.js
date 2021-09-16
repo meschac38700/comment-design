@@ -1,10 +1,6 @@
-import { initState } from "./utils/state.js";
+import { initState, loadMoreComment } from "./utils/state.js";
 import ConfirmModal from "./custom_elements/ConfirmModal.js";
-import {
-	hide_or_add_show_answers,
-	addCommentHandler,
-	loadingComments,
-} from "./utils/functools.js";
+import { addCommentHandler, loadingComments } from "./utils/functools.js";
 
 /****************  Add Comment  ****************
  ******************************************************/
@@ -19,3 +15,5 @@ initState()
 	.catch((err) => {
 		console.log(err);
 	});
+
+loadMoreComment();
