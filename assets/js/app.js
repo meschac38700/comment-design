@@ -1,10 +1,6 @@
-import state from "./utils/state.js";
+import { initState, loadMoreComment } from "./utils/state.js";
 import ConfirmModal from "./custom_elements/ConfirmModal.js";
-import {
-	hide_or_add_show_children_btn,
-	addCommentHandler,
-	loadingComments,
-} from "./utils/functools.js";
+import { addCommentHandler, loadingComments } from "./utils/functools.js";
 
 /****************  Add Comment  ****************
  ******************************************************/
@@ -12,6 +8,12 @@ const commentForm = document.querySelector("form.add_parent_comment");
 addCommentHandler(commentForm);
 
 // Loading server comments
-loadingComments(state);
+initState()
+	.then((data) => {
+		loadingComments(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
-hide_or_add_show_children_btn();
+loadMoreComment();
